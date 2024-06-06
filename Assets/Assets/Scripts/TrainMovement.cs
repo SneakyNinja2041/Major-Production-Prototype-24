@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class TrainMovement : MonoBehaviour
 {
@@ -25,6 +27,16 @@ public class TrainMovement : MonoBehaviour
     public int PurplePassengers = 0;
     public int PinkPassengers = 0;
 
+    [SerializeField] GameObject RedCounter;
+    [SerializeField] GameObject OrangeCounter;
+    [SerializeField] GameObject YellowCounter;
+    [SerializeField] GameObject GreenCounter;
+    [SerializeField] GameObject BlueCounter;
+    [SerializeField] GameObject PurpleCounter;
+    [SerializeField] GameObject PinkCounter;
+
+    public TextMeshProUGUI scoreText;
+
     public int Points;
 
     public Transform WP;
@@ -40,47 +52,20 @@ public class TrainMovement : MonoBehaviour
         // Passengers
 
 
+        // Reset Counter UI
 
+        RedCounter.SetActive(false);
+        OrangeCounter.SetActive(false);
+        YellowCounter.SetActive(false);
+        GreenCounter.SetActive(false);
+        BlueCounter.SetActive(false);
+        PurpleCounter.SetActive(false);
+        PinkCounter.SetActive(false);
     }
 
     private void Update()
     {
-       
-
-        if (Input.GetKeyDown(KeyCode.R)) //Move to Red Station
-        {
-            WP = RWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.O)) //Move to Orange Station
-        {
-            WP = OWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y)) //Move to Yellow Station
-        {
-            WP = YWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.G)) //Move to Green Station
-        {
-            WP = GWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.B)) //Move to Blue Station
-        {
-            WP = BWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.L)) //Move to Purple Station
-        {
-            WP = PpWP;
-        }
-
-        if (Input.GetKeyDown(KeyCode.P)) //Move to Pink Station
-        {
-            WP = PkWP;
-        }
+        scoreText.text = "SCORE: " + Points;
 
         transform.position = Vector3.MoveTowards(transform.position, WP.transform.position, moveSpeed * Time.deltaTime);
 
@@ -88,6 +73,8 @@ public class TrainMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Collision with the stations
+
         if (other.CompareTag("Red"))
         {           
             if(RedPassengers > 0)
@@ -108,6 +95,7 @@ public class TrainMovement : MonoBehaviour
                     }
                 }
 
+                RedCounter.SetActive(false);
             }
 
             Debug.Log("Arrived at RED STATION");
@@ -133,6 +121,8 @@ public class TrainMovement : MonoBehaviour
                     }
                 }
 
+                OrangeCounter.SetActive(false);
+
             }
             Debug.Log("Arrived at ORANGE STATION");
         }
@@ -154,6 +144,8 @@ public class TrainMovement : MonoBehaviour
 
                     }
                 }
+
+                YellowCounter.SetActive(false);
             }
             Debug.Log("Arrived at YELLOW STATION");
         }
@@ -175,6 +167,8 @@ public class TrainMovement : MonoBehaviour
 
                     }
                 }
+
+                GreenCounter.SetActive(false);
             }
             Debug.Log("Arrived at GREEN STATION");
         }
@@ -196,6 +190,8 @@ public class TrainMovement : MonoBehaviour
 
                     }
                 }
+
+                BlueCounter.SetActive(false);
             }
             Debug.Log("Arrived at BLUE STATION");
         }
@@ -217,6 +213,8 @@ public class TrainMovement : MonoBehaviour
 
                     }
                 }
+
+                PurpleCounter.SetActive(false);
             }
             Debug.Log("Arrived at PURPLE STATION");
         }
@@ -238,11 +236,112 @@ public class TrainMovement : MonoBehaviour
 
                     }
                 }
+
+                PinkCounter.SetActive(false);
             }
             Debug.Log("Arrived at PINK STATION");
         }
 
+        // Collision with the passengers
 
+        if (other.CompareTag("PRed"))
+        {
+            RedPassengers++;
+            RedCounter.SetActive(true);
+
+            Debug.Log("RED PASSENGER!");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("POrange"))
+        {
+            OrangePassengers++;
+            OrangeCounter.SetActive(true);
+
+            Debug.Log("ORANGE PASSENGER");
+            Destroy(other.gameObject); 
+        }
+
+        if (other.CompareTag("PYellow"))
+        {
+            YellowPassengers++ ;
+            YellowCounter.SetActive(true);
+
+            Debug.Log("YELLOW PASSENGER");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("PGreen"))
+        {
+            GreenPassengers++;
+            GreenCounter.SetActive(true);
+
+            Debug.Log("GREEN PASSENGER");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("PBlue"))
+        {
+            BluePassengers++;
+            BlueCounter.SetActive(true);
+
+            Debug.Log("BLUE PASSENGER");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("PPurple"))
+        {
+            PurplePassengers++;
+            PurpleCounter.SetActive(true);
+
+            Debug.Log("PURPLE PASSENGER");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("PPink"))
+        {
+            PinkPassengers++;
+            PinkCounter.SetActive(true);
+
+            Debug.Log("PINK PASSENGER");
+            Destroy(other.gameObject);
+        }
     }
+
+    public void MoveRed()
+    {
+        WP = RWP;
+    }
+
+    public void MoveOrange()
+    {
+        WP = OWP;
+    }
+
+    public void MoveYellow()
+    {
+        WP = YWP;
+    }
+
+    public void MoveGreen()
+    {
+        WP = GWP;
+    }
+
+    public void MoveBlue()
+    {
+        WP = BWP;
+    }
+
+    public void MovePurple()
+    {
+        WP = PpWP;
+    }
+
+    public void MovePink()
+    {
+        WP = PkWP;
+    }
+
 
 }

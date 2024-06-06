@@ -11,6 +11,13 @@ TagManager:
   - Blue
   - Purple
   - Pink
+  - PRed
+  - POrange
+  - PYellow
+  - PGreen
+  - PBlue
+  - PPurple
+  - PPink
   layers:
   - Default
   - TransparentFX
